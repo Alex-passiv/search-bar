@@ -1,44 +1,69 @@
 import React, { Component } from 'react';
-import { InstantSearch } from 'react-instantsearch-dom' ;
-import { SearchBox } from 'react-instantsearch-dom';
-import { Hits } from 'react-instantsearch-dom';
-import { Highlight } from 'react-instantsearch-dom';
-
-const Hit = ({hit}) =>
-  <div className="hit">
-      <div className = "hitName">
-        <Highlight attribute = "name" hit = {hit}/>
-      </div>
-  </div>
+import { Button, Input, Footer, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 
 
-const Content = () =>
-<div className = "content">
-  <Hits hitComponent = {Hit}/>
-</div>
 
-
+import countriesList from './components/faq.json'
 class App extends Component {
-  render() {
-    return (
-      <InstantSearch
-      appId="2CLSZKQ1OL"
-      apiKey="bfa31b452d8736c6b7d1c232ed5ecbfe"
-      indexName="passiv_index"
-      routing= "true"
-      >
-      
-      <header>
-        <SearchBox translations = {{placeholder:'What can we help you with?'}}/>
-      </header>
 
-      <main>
-        <Content/>
-      </main>
+    state = {
+        search : ""
+    }
 
-      </InstantSearch> 
-    );
-  }
+    renderFaq = faq =>{
+        const {search} = this.state;
+        var code = faq.question.toLowerCase()
+
+        if( search === "" ){
+            return null
+        }
+
+        return <div className="col-md-4 col-sm-6 mt-5 d-flex align-items-stretch">
+            <Card>
+                <CardBody>
+                    <p className=""> </p>
+                    <CardTitle title={faq.question}>{faq.question.substring(0, 100)} </CardTitle>
+                    <CardText>{faq.resolution}</CardText>
+                    
+                </CardBody>
+            </Card>
+        </div>
+    }
+
+    onchange = e =>{
+        this.setState({ search : e.target.value });
+    }
+
+    render() {
+
+        const {search} = this.state;
+        const filteredCountries = countriesList.filter( faq =>{
+            return faq.question.toLowerCase().indexOf( search.toLowerCase() ) !== -1
+        })
+
+        return (
+            <div className="flyout">
+            <main style={{marginTop: '30rem'}}>
+            </main>
+                <div className="containerBig">
+                    <div className="row">
+                        <div className="col"></div>
+                        <div className="col-lg">
+                            <Input label="What do you need help with?" font="1000px" icon="search"  onChange={this.onchange} />
+                        </div>
+                        <div className="col"></div>
+                    </div>
+                    <div className="row">
+                        {
+                            filteredCountries.map( faq =>{
+                                return this.renderFaq(faq)
+                            })
+                        }
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
