@@ -3,7 +3,7 @@ import { Button, Input, Footer, Card, CardBody, CardImage, CardTitle, CardText }
 
 
 
-import countriesList from './components/faq.json'
+import faq from './components/faq.json'
 class App extends Component {
 
     state = {
@@ -37,7 +37,7 @@ class App extends Component {
     render() {
 
         const {search} = this.state;
-        const filteredCountries = countriesList.filter( faq =>{
+        const filteredfaq = faq.filter( faq =>{
             return faq.question.toLowerCase().indexOf( search.toLowerCase() ) !== -1
         })
 
@@ -55,7 +55,7 @@ class App extends Component {
                     </div>
                     <div className="row">
                         {
-                            filteredCountries.map( faq =>{
+                            filteredfaq.map( faq =>{
                                 return this.renderFaq(faq)
                             })
                         }
