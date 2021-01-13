@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Input, Footer, Card, CardBody, CardImage, CardTitle, CardText } from 'mdbreact';
 
 
-
 import faq from './components/faq.json'
 class App extends Component {
 
@@ -18,15 +17,15 @@ class App extends Component {
             return null
         }
 
-        return <div className="col-md-4 col-sm-6 mt-5 d-flex align-items-stretch">
-            <Card>
-                <CardBody>
+        return <div>
+            <Grid columns="1fr 1fr">
+                <div>
                     <p className=""> </p>
-                    <CardTitle title={faq.question}>{faq.question.substring(0, 100)} </CardTitle>
+                    <H1 title={faq.question}>{faq.question.substring(0, 100)} </H1>
                     <CardText>{faq.resolution}</CardText>
                     
                 </CardBody>
-            </Card>
+            </Grid>
         </div>
     }
 
